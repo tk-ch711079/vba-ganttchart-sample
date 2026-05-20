@@ -1,0 +1,33 @@
+'===========================================================
+'  ガントチャート用の簡易ハイライト描画サンプル
+'  （実務ロジックを含まない安全なデモコード）
+'===========================================================
+Sub DrawTaskBarSample()
+
+    Dim ws As Worksheet
+    Dim startCol As Long, endCol As Long
+    Dim rowNum As Long
+    Dim bar As Shape
+    Dim x1 As Double, x2 As Double, y As Double, h As Double
+
+    ' 対象シート
+    Set ws = ThisWorkbook.Sheets("進捗情報")
+
+    ' デモ用の行・列（本番ロジックは非公開）
+    rowNum = 10
+    startCol = 5   ' 開始日列
+    endCol = 12    ' 終了日列
+
+    ' 座標計算（セル位置 → 図形座標）
+    x1 = ws.Cells(rowNum, startCol).Left
+    x2 = ws.Cells(rowNum, endCol).Left + ws.Cells(rowNum, endCol).Width
+    y = ws.Cells(rowNum, startCol).Top + 2
+    h = ws.Cells(rowNum, startCol).Height - 4
+
+    ' ガントチャート風のバーを描画
+    Set bar = ws.Shapes.AddShape(msoShapeRectangle, x1, y, x2 - x1, h)
+    bar.Fill.ForeColor.RGB = RGB(0, 176, 80)
+    bar.Line.Visible = msoFalse
+    bar.Name = "SampleTaskBar"
+
+End Sub
